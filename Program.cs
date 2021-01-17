@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -19,6 +20,7 @@ namespace net5sample
 			.Enrich.FromLogContext()
 			.Enrich.WithProperty("ApplicationName", typeof(Program).Assembly.GetName().Name)
 			.WriteTo.Console()
+			.WriteTo.ApplicationInsights(TelemetryConfiguration.Active, TelemetryConverter.Traces)
 			.CreateLogger();
 
 			try
